@@ -1,0 +1,27 @@
+---
+- name: The magic of the copy module
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+          # when running in "normal" conneiton mode (ssh)
+          # by default:copy moves a file FROM controller TO remote hosts
+
+
+
+        - name: copy fry's resume to hosts
+          copy:
+                    src: ~/ans/files/fryresume.txt      #<---- on the controller
+                    dest: ~/fryresume.txt               #<---- on the host
+                   
+
+        - name: Copy module as run in local host mode
+            hosts: localhost
+            gather_facts: yes
+
+
+          tasks:
+                    - name: Copy fry's resume from loc A on controlelr to loc B
+                      copy:
+                              src: ~ans/files/fryresume.txt
+                              dst: ~ans/files/fryresume.txt.moved 

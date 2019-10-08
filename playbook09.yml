@@ -1,0 +1,15 @@
+---
+- name: Change the Banner on the EOS Device
+  hosts: eosswitches
+  connection: network_cli
+  gather_facts: no
+
+  vars:
+
+  tasks:
+          - name: Use eosbanner to set a banner of the day 
+            eos_banner:
+                    banner: login
+                    text: Remove me
+                    state: absent
+            become: yes

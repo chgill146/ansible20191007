@@ -1,0 +1,32 @@
+---
+- name: Building a file from a JSON lookup
+  hosts: planetexpress
+  gather_facts: yes
+
+  vars:
+          issastros: "{{ lookup('url', 'http://api.open-notify.org/astros.json', split_lines=False) }}"
+
+  tasks:
+          - name: Display issastros
+            debug:
+                    var: issastros
+                   
+
+          - name: copy of content of issastros to local file
+            copy:
+                    content: "{{ issastros }} "
+                    dest: ~/astros.json
+
+
+          - name : copy just the names to a file on a remote hosts
+            lineinfile:
+                    path: ~/astrofirstnames.txt
+                    line: "{{ item.name.split()[0] }}"
+                    create: yes
+                    
+
+            loop: "{{ issastros.people }}"
+
+
+
+          
